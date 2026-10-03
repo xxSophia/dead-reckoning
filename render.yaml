@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: dead-reckoning
+    runtime: docker
+    plan: free
+    healthCheckPath: /health
+    envVars:
+      - key: NODE_VERSION
+        value: 20

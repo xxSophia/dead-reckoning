@@ -1,0 +1,39 @@
+:root{--bg:#031519;--panel:#08272b;--ink:#d9fff5;--dim:#79a9a5;--cyan:#66f7dc;--amber:#ffd166;--red:#ff6b6b;--line:#1a5051}*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 50% 10%,#0b3138,#020b0e 65%);color:var(--ink);font:15px ui-monospace,SFMono-Regular,Menlo,monospace;min-height:100vh;letter-spacing:.03em}body.damage{animation:shake .25s linear 2;background:#280d12}.noise{position:fixed;inset:0;pointer-events:none;opacity:.055;background:repeating-linear-gradient(0deg,transparent 0 2px,#fff 3px 3px);z-index:9}header,footer{display:flex;justify-content:space-between;align-items:center;padding:18px max(18px,calc((100vw - 1000px)/2));border-bottom:1px solid var(--line);color:var(--cyan)}header small{display:block;color:var(--dim);font-size:9px;margin-top:3px}button,input{font:inherit}button{min-height:44px;border:1px solid var(--line);background:#0a2428;color:var(--ink);padding:10px 14px;cursor:pointer}button:hover,button:focus-visible{border-color:var(--cyan);outline:2px solid transparent;box-shadow:0 0 18px #66f7dc33}.big,#solo{background:var(--cyan);color:#001614;font-weight:900;border:0}main{max-width:1000px;margin:auto;padding:20px}.hero{max-width:660px;margin:3vh auto;text-align:center}.eyebrow{color:var(--amber);font-size:12px}.hero h1{font:900 clamp(42px,10vw,88px)/.86 system-ui;margin:20px 0;letter-spacing:-.06em}.hero h1 em{color:var(--cyan);font-style:normal}.lede{color:#afd1cc;line-height:1.7;max-width:560px;margin:20px auto 30px}.hero label{display:block;text-align:left;color:var(--dim);max-width:430px;margin:12px auto}.hero input,.join input,#chatInput{width:100%;min-height:48px;background:#031216;border:1px solid var(--line);color:var(--ink);padding:12px}.primary,.join{display:flex;gap:8px;max-width:430px;margin:8px auto}.primary>*{flex:1}.join input{flex:1}.link{background:none;border:0;color:var(--dim)}.sonar,.scope{position:relative;overflow:hidden;background:radial-gradient(circle,#0e4447 1px,transparent 2px),repeating-radial-gradient(circle,transparent 0 42px,#1b5857 43px 44px);border:1px solid var(--line)}.sonar{width:170px;height:170px;border-radius:50%;margin:auto}.sonar i,.scope i{position:absolute;width:50%;height:50%;left:50%;top:0;transform-origin:0 100%;background:linear-gradient(45deg,#66f7dc00,#66f7dc35);animation:sweep 3.8s linear infinite}.sonar span{position:absolute;left:68%;top:31%;color:var(--amber);font-size:22px}.topline,.hud,.stationHead{display:flex;justify-content:space-between;color:var(--dim);padding:12px 0}.crew{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px}.crew>div,.card{border:1px solid var(--line);background:#061d21;padding:16px}.crew small{display:block;color:var(--dim);margin-top:5px}.card{margin:16px 0}.card label{display:block;padding:12px}.card small{display:block;color:var(--dim);margin:5px 0 0 22px}.alert{display:flex;gap:18px;border:1px solid #774b38;background:#2b2117;padding:18px;align-items:center}.alert>span{font-size:42px;color:var(--amber)}.alert h2{margin:3px 0}.alert p{margin:0;color:#d7c5a5}.station{margin-top:12px;border:1px solid var(--line);padding:0 14px 14px}.scope{min-height:170px;display:grid;place-items:center;padding:30px;text-align:center;font-size:clamp(16px,3vw,24px);color:var(--cyan);text-shadow:0 0 10px var(--cyan)}.hint{border-left:3px solid var(--amber);padding:10px 14px;background:#211f13;color:var(--amber)}.hint span{color:var(--ink)}.pings,.actions #actionBtns{display:flex;gap:7px;flex-wrap:wrap;margin:10px 0}.pings button{color:var(--amber)}.chat{border:1px solid var(--line);margin:12px 0}.chat #messages{height:150px;overflow:auto;padding:10px}.msg{margin:6px 0;color:#b9d9d4}.msg b{color:var(--cyan)}.chat form{display:flex}.chat form input{border-left:0;border-bottom:0}.actions{border:1px solid var(--line);padding:14px}.actions button.on{border-color:var(--amber);color:var(--amber)}#selected{min-height:44px;padding:12px;background:#031216;margin:10px 0;color:var(--amber)}dialog{max-width:620px;background:#061d21;color:var(--ink);border:1px solid var(--cyan);padding:28px;line-height:1.6}dialog::backdrop{background:#000b}.x{float:right}footer{border-top:1px solid var(--line);border-bottom:0;font-size:10px;color:var(--dim);margin-top:40px}#toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--amber);color:#111;padding:12px 18px;display:none;z-index:20}@keyframes sweep{to{transform:rotate(360deg)}}@keyframes shake{25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}@media(max-width:600px){main{padding:12px}.hero{margin-top:1vh}.sonar{width:120px;height:120px}.primary{flex-direction:column}.hud{position:sticky;top:0;background:#031519;z-index:5}.scope{min-height:135px}.chat #messages{height:120px}}@media(prefers-reduced-motion:reduce){*{animation:none!important;scroll-behavior:auto!important}}
+.invite{display:grid;grid-template-columns:1fr auto;gap:18px;align-items:center}.invite p{overflow-wrap:anywhere;color:var(--dim)}#qr{background:#fff;padding:8px;min-width:148px;min-height:148px;display:grid;place-items:center}.tutorialSteps{display:flex;gap:6px;margin:20px 0}.tutorialSteps b{flex:1;border:1px solid var(--line);padding:8px;font-size:11px}.rank{padding:8px;border-bottom:1px solid var(--line);text-align:left}#vote .crew button{min-height:64px}.reduced *{animation:none!important}.reduced body,.reduced.damage{animation:none!important}@media(max-width:600px){.invite{grid-template-columns:1fr}.invite #qr{justify-self:center}header{gap:8px;align-items:flex-start}header>div:last-child{display:flex;gap:4px}header button{padding:8px;font-size:10px}}
+.comm-label {
+  margin-top: 14px;
+  margin-bottom: 6px;
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: baseline;
+  color: var(--yellow);
+}
+
+.comm-label small {
+  opacity: .8;
+  text-align: right;
+}
+
+.actions {
+  margin-top: 18px;
+  border: 1px solid var(--cyan);
+  padding: 14px;
+}
+
+.actions h3 {
+  margin: 0 0 8px;
+  color: var(--cyan);
+  letter-spacing: .06em;
+}
+
+@media (max-width: 600px) {
+  .comm-label {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .comm-label small {
+    text-align: left;
+  }
+}

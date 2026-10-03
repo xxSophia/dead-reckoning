@@ -1,0 +1,18 @@
+const STATIONS=['Sonar','Navigation','Engine','Periscope','Comms','Hull'];
+const ACTIONS=['SEAL','VENT','TURN PORT','TURN STARBOARD','SLOW','BOOST','DIVE','SURFACE','COOL','PING'];
+const CRISES=[
+ {name:'Pressure leak',icon:'◇',truth:'SEAL',flavor:'A pressure seam is opening in compartment'},
+ {name:'Mine field',icon:'✦',truth:'TURN PORT',flavor:'A mine lattice blocks the trench near bearing'},
+ {name:'Reactor overheating',icon:'△',truth:'COOL',flavor:'Reactor coolant loop is exceeding safe thermal load'},
+ {name:'Cavitation spike',icon:'≈',truth:'SLOW',flavor:'Propeller cavitation is broadcasting our position'},
+ {name:'Thermal layer collapse',icon:'▽',truth:'DIVE',flavor:'The masking thermal layer is collapsing above us'},
+ {name:'Pursuit contact',icon:'●',truth:'BOOST',flavor:'A fast contact is converging from the stern'}
+];
+function hashSeed(s){let h=2166136261>>>0;for(const c of String(s)){h^=c.charCodeAt(0);h=Math.imul(h,16777619)}return h>>>0}
+function rng(seed){let a=hashSeed(seed);return()=>{a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
+function generateCrisis(seed,depth,team=false){const r=rng(`${seed}:${depth}`),base=CRISES[Math.floor(r()*CRISES.length)],sector=String.fromCharCode(65+Math.floor(r()*6)),bearing=Math.floor(r()*36)*10;let solution=[base.truth];if(depth>=4) solution.push(r()>.5?'PING':'VENT');if(depth>=7) solution.push(r()>.5?'BOOST':'SLOW');const noise=team?Math.min(.16,.02+depth*.012):Math.min(.42,.04+depth*.035);const clues={};STATIONS.forEach((s,i)=>{const reliable=r()>noise;const shown=reliable?solution[0]:ACTIONS.filter(a=>a!==solution[0])[Math.floor(r()*(ACTIONS.length-1))];clues[s]={text:clueText(s,base,sector,bearing,shown,reliable,solution),reliable}});const offlineStation=depth>=6?STATIONS[Math.floor(r()*STATIONS.length)]:null;const relayStation=offlineStation?STATIONS[(STATIONS.indexOf(offlineStation)+1+Math.floor(r()*5))%STATIONS.length]:null;return{id:`${hashSeed(seed).toString(16)}-${depth}`,name:base.name,icon:base.icon,description:`${base.flavor} ${base.name==='Pressure leak'?sector:base.name==='Mine field'?bearing+'°':''}`.trim(),solution,clues,noise,offlineStation,relayStation}}
+function clueText(s,b,sector,bearing,shown,reliable,solution){const lead={Sonar:`Echo solution ${shown}; contact ${bearing}°`,Navigation:`Chart model recommends ${shown}; sector ${sector}`,Engine:`Machinery telemetry favors ${shown}`,Periscope:`Optical trace suggests ${shown}; mark ${b.icon}`,Comms:`Damage protocol fragment: ${shown}`,Hull:`Strain sensors indicate ${shown}; compartment ${sector}`}[s];return lead+(solution.length>1&&['Comms','Hull','Engine'].includes(s)?`; follow with ${solution[1]}`:'')+(solution.length>2&&s==='Navigation'?`; then ${solution[2]}`:'')+(reliable?'':' [STATIC]')}
+function dailySeed(date=new Date()){return `DAILY-${date.toISOString().slice(0,10)}`}
+function initialState(seed='DEEP',team=false){return{seed,team,depth:1,hull:100,status:'lobby',round:null,history:[],startedAt:null}}
+function reduce(state,event){const s=structuredClone(state);if(event.type==='START'){s.status='playing';s.startedAt=Date.now();s.round=generateCrisis(s.seed,s.depth,s.team)}else if(event.type==='SUBMIT'&&s.status==='playing'){const ok=JSON.stringify(event.actions)===JSON.stringify(s.round.solution);s.history.push({depth:s.depth,ok,actions:event.actions,solution:s.round.solution});if(!ok)s.hull=Math.max(0,s.hull-25);if(s.hull<=0){s.status='lost'}else if(s.depth>=10){s.status='won'}else{s.depth++;s.round=generateCrisis(s.seed,s.depth,s.team)}}return s}
+module.exports={STATIONS,ACTIONS,generateCrisis,dailySeed,initialState,reduce,hashSeed};
